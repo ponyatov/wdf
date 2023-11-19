@@ -1,5 +1,6 @@
 # var
 MODULE  = $(notdir $(CURDIR))
+OS      = $(shell uname -s)
 
 # tool
 CURL = curl -L -o
@@ -39,3 +40,11 @@ doc/d-readthedocs-io-en-latest.pdf:
 doc/BuildWebAppsinVibe.pdf:
 	$(CURL) $@ https://raw.githubusercontent.com/reyvaleza/vibed/main/BuildWebAppsinVibe.pdf
 
+# install
+.PHONY: install update gz
+install: doc gz
+	$(MAKE) update
+update:
+	sudo apt update
+	sudo apt install -yu `cat apt.$(OS)`
+gz:
